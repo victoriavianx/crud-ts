@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import listUsersService from "../services/listUser.service";
 
-const listUsers = (req: Request, res: Response) => {
+const listUsers = async (req: Request, res: Response) => {
   try {
-    const users = listUsersService();
+    const users = await listUsersService();
 
     return res.status(200).json(users);
   } catch (error) {

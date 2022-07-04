@@ -1,25 +1,39 @@
-import { users } from "../database";
-import { IUser, IUserRequest } from "../interfaces/users";
+import { IUserRequest } from "../interfaces/users";
 import { v4 as uuidv4 } from "uuid";
+import { AppDataSource } from "../data-source";
+import { User } from "../entities/user.entity";
+import { hash } from "bcryptjs";
 
-const createUserService = ({
+const createUserService = async ({
   age,
   name,
   email,
   password,
-}: IUserRequest): IUser => {
-  const newUser: IUser = {
-    id: uuidv4(),
+}: IUserRequest): Promise<User> => {
+  const userRepository = AppDataSource.getRepository(User);
+
+  const findUser = await userRepository.findOne({
+    where: {
+      email: email,
+    },
+  });
+
+  if (findUser) {
+    throw new Error("User already exists");
+  }
+
+  const hashedPassword = await hash(password, 10);
+
+  const user = userRepository.create({
     name,
     email,
-    password,
+    password: hashedPassword,
     age,
-    created_at: new Date(),
-    updated_at: new Date(),
-  };
+  });
 
-  users.push(newUser);
-  return newUser;
+  await userRepository.save(user);
+
+  return user;
 };
 
 export default createUserService;

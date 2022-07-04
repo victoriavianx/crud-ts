@@ -1,7 +1,11 @@
-import { users } from "../database";
-import { IUser } from "../interfaces/users";
+import { AppDataSource } from "../data-source";
+import { User } from "../entities/user.entity";
 
-const listUsersService = (): IUser[] => {
+const listUsersService = async (): Promise<User[]> => {
+  const userRepository = AppDataSource.getRepository(User);
+
+  const users = await userRepository.find();
+
   return users;
 };
 

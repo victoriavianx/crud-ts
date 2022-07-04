@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import createUserService from "../services/createUser.service";
 
-const createUser = (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password, age } = req.body;
-    const user = createUserService({ name, email, password, age });
+    const user = await createUserService({ name, email, password, age });
 
     return res.status(201).json(user);
   } catch (error) {
