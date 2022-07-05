@@ -8,20 +8,26 @@ const updateUserService = async (
 ) => {
   const userRepository = AppDataSource.getRepository(User);
 
-  await userRepository
-    .createQueryBuilder()
-    .update(User)
-    .set({
-      name: name,
-      email: email,
-      age: age,
-    })
-    .where("id = :id", { id: userId })
-    .execute();
+  const findUser = await userRepository.findOneBy({ id: userId });
 
-  const updatedUser = userRepository.findBy({ id: userId });
+  if (!findUser) {
+    throw new Error("Usuário não encontrado");
+  }
 
-  return updatedUser;
+  await userRepository.save({
+    ...findUser,
+    name,
+    email,
+    age,
+  });
+
+  const res = {
+    name,
+    email,
+    age,
+  };
+
+  return res;
 };
 
 export default updateUserService;

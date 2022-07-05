@@ -4,7 +4,7 @@ import { User } from "../entities/user.entity";
 const listUserService = async (userId: string): Promise<User[]> => {
   const userRepository = AppDataSource.getRepository(User);
 
-  const user = userRepository.findBy({ id: userId });
+  const user = await userRepository.findBy({ id: userId });
 
   return user;
 

@@ -9,7 +9,7 @@ const createUserService = async ({
   name,
   email,
   password,
-}: IUserRequest): Promise<User> => {
+}: IUserRequest): Promise<any> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const findUser = await userRepository.findOne({
@@ -33,7 +33,7 @@ const createUserService = async ({
 
   await userRepository.save(user);
 
-  return user;
+  return { ...user, password: undefined };
 };
 
 export default createUserService;

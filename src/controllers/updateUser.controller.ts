@@ -7,7 +7,10 @@ const updateUser = async (req: Request, res: Response) => {
     const { name, email, age } = req.body;
     const updatedUser = await updateUserService({ name, email, age }, userId);
 
-    return res.status(200).json(updatedUser);
+    return res.status(200).json({
+      message: "Usuário atualizado",
+      updatedUser,
+    });
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({
