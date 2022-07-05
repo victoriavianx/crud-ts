@@ -7,7 +7,7 @@ const deleteUserService = async (userId: string) => {
   const user = await userRepository.findOneBy({ id: userId });
 
   if (!user) {
-    throw new Error("User not found");
+    throw new Error("Usuário não encontrado");
   }
 
   await userRepository.delete({ id: userId });

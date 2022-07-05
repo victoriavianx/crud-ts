@@ -10,6 +10,8 @@ const updateUserService = async (
 
   const findUser = await userRepository.findOneBy({ id: userId });
 
+  console.log(findUser);
+
   if (!findUser) {
     throw new Error("Usuário não encontrado");
   }

@@ -19,7 +19,7 @@ const createUserService = async ({
   });
 
   if (findUser) {
-    throw new Error("User already exists");
+    throw new Error("Usuário já existente");
   }
 
   const hashedPassword = await hash(password, 10);
