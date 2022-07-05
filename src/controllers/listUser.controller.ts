@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
-import listUsersService from "../services/listUser.service";
+import listUserService from "../services/listUser.service";
 
-const listUsers = async (req: Request, res: Response) => {
+const listUser = async (req: Request, res: Response) => {
   try {
-    const users = await listUsersService();
+    const userId = req.params.id;
+    const user = await listUserService(userId);
 
-    return res.status(200).json(users);
+    return res.status(200).json(user);
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({
@@ -15,4 +16,4 @@ const listUsers = async (req: Request, res: Response) => {
   }
 };
 
-export default listUsers;
+export default listUser;

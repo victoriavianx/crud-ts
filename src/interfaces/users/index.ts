@@ -14,3 +14,9 @@ export interface IUser {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface IUserUpdate {
+  name: string;
+  email: string;
+  age: number;
+}

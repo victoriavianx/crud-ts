@@ -1,12 +1,19 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/user.entity";
 
-const listUsersService = async (): Promise<User[]> => {
+const listUserService = async (userId: string): Promise<User[]> => {
   const userRepository = AppDataSource.getRepository(User);
 
-  const users = await userRepository.find();
+  const user = userRepository.findBy({ id: userId });
 
-  return users;
+  return user;
+
+  //   const user = await userRepository
+  //     .createQueryBuilder("user")
+  //     .where("user.id = :id", { id: userId })
+  //     .getOne();
+
+  //   return user;
 };
 
-export default listUsersService;
+export default listUserService;
